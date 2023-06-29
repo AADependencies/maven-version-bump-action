@@ -37,18 +37,17 @@ git config --global user.name $NAME
 OLD_VERSION=$($DIR/get-version.sh)
 
 BUMP_MODE="none"
-if git log -1 | grep -q "#major"; then
+if git log -1 | grep -q "major"; then
   BUMP_MODE="major"
-elif git log -1 | grep -q "#minor"; then
+elif git log -1 | grep -q "minor"; then
   BUMP_MODE="minor"
-elif git log -1 | grep -q "#patch"; then
+elif git log -1 | grep -q "patch"; then
   BUMP_MODE="patch"
 fi
 
 if [[ "${BUMP_MODE}" == "none" ]]
 then
-  echo "No matching commit tags found."
-  echo "pom.xml at" $POMPATH "will remain at" $OLD_VERSION
+  BUMP_MODE="patch"
 else
   echo $BUMP_MODE "version bump detected"
   bump $BUMP_MODE $OLD_VERSION
