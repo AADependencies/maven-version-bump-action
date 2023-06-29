@@ -2,8 +2,6 @@
 name: Maven Version Bump Action
 description: A simple GitHub Actions to bump the version of Maven projects
 
-author: Nick Nichols
-
 branding:
   color: purple
   icon: git-commit
@@ -34,19 +32,21 @@ runs:
   using: "composite"
   steps:
     - name: Bump Version
+      shell: bash
+      run: ${{github.action_path}}/version-bump.sh
       env:
         TOKEN: ${{ inputs.github-token }}
         EMAIL: ${{ inputs.git-email }}
         NAME: ${{ inputs.git-username }}
         POMPATH: ${{ inputs.pom-path }}
-      run: ${{github.action_path}}/version-bump.sh
-      shell: bash
+      
     - name: Set outputs
       id: get-outputs
       shell: bash
+      run: echo "version=$(${{github.action_path}}/get-version.sh)" >> $GITHUB_OUTPUT
       env:
         POMPATH: ${{ inputs.pom-path }}
-      run: echo "::set-output name=version::$(${{github.action_path}}/get-version.sh)"
+      
     - name: Result
       shell: bash
       run: "echo 'Version is now ${{ steps.get-outputs.outputs.version }}'"
