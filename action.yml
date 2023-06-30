@@ -22,6 +22,10 @@ inputs:
     description: 'The name to use for the version bump commit. e.g. github.actor'
     required: true
     default: github-actions[bot]
+  is-pr:
+    description: 'If its a PR we want to tag the version with pr'
+    required: true
+    default: 'false'
 
 outputs:
   version:
@@ -39,14 +43,15 @@ runs:
         EMAIL: ${{ inputs.git-email }}
         NAME: ${{ inputs.git-username }}
         POMPATH: ${{ inputs.pom-path }}
-      
+        PR: ${{ inputs.is-pr }}
+
     - name: Set outputs
       id: get-outputs
       shell: bash
       run: echo "version=$(${{github.action_path}}/get-version.sh)" >> $GITHUB_OUTPUT
       env:
         POMPATH: ${{ inputs.pom-path }}
-      
+
     - name: Result
       shell: bash
       run: "echo 'Version is now ${{ steps.get-outputs.outputs.version }}'"
