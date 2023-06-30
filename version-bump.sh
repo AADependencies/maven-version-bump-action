@@ -56,7 +56,7 @@ if $PR = 'true'
   git tag $NEW_VERSION
   git push $REPO --follow-tags
   git push $REPO --tags
-elif
+else
   echo $BUMP_MODE "version bump detected"
   bump $BUMP_MODE $OLD_VERSION
   echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $NEW_VERSION
