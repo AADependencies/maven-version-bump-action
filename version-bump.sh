@@ -67,3 +67,4 @@ else
   git tag $NEW_VERSION
   git push $REPO --follow-tags
   git push $REPO --tags
+fi
