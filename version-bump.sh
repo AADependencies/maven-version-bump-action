@@ -49,12 +49,13 @@ if [[ "$PR" -eq 'true' ]]  #1 = true
 then
   echo $BUMP_MODE "version bump detected"
   bump $BUMP_MODE $OLD_VERSION
-  echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $NEW_VERSION"-pr"
-  mvn -q versions:set -DnewVersion="${NEW_VERSION}-pr"
+  PR_VERSION="${NEW_VERSION}-pr"
+  echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $PR_VERSION
+  mvn -q versions:set -DnewVersion=$PR_VERSION
   git add $POMPATH/pom.xml
   REPO="https://$GITHUB_ACTOR:$TOKEN@github.com/$GITHUB_REPOSITORY.git"
-  git commit -m "Bump pom.xml from $OLD_VERSION to $NEW_VERSION-pr"
-  git tag $NEW_VERSION
+  git commit -m "Bump pom.xml from $OLD_VERSION to $PR_VERSION"
+  git tag $PR_VERSION
   git push $REPO --follow-tags
   git push $REPO --tags
 else
