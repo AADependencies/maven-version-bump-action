@@ -45,7 +45,7 @@ elif git log -1 | grep -q "patch"; then
   BUMP_MODE="patch"
 fi
 
-if [[$PR == 'true']]
+if [[ "$PR" -eq 'true' ]]  #1 = true
 then
   echo $BUMP_MODE "version bump detected"
   bump $BUMP_MODE $OLD_VERSION
