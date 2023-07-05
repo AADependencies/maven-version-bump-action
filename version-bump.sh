@@ -37,11 +37,11 @@ git config --global user.name $NAME
 OLD_VERSION=$($DIR/get-version.sh)
 
 BUMP_MODE="patch"
-if git log -1 | grep -q "major"; then
+if git log -1 | grep -q "#major"; then
   BUMP_MODE="major"
-elif git log -1 | grep -q "minor"; then
+elif git log -1 | grep -q "#minor"; then
   BUMP_MODE="minor"
-elif git log -1 | grep -q "patch"; then
+elif git log -1 | grep -q "#patch"; then
   BUMP_MODE="patch"
 fi
 
@@ -49,9 +49,9 @@ if [[ "$PR" -eq 'true' ]]  #1 = true
 then
   echo $BUMP_MODE "version bump detected"
   bump $BUMP_MODE $OLD_VERSION
-  PR_VERSION="$NEW_VERSION-pr"
+  PR_VERSION="${NEW_VERSION}-pr"
   echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $PR_VERSION
-  mvn -q versions:set -DnewVersion=$PR_VERSION
+  mvn -q versions:set -DnewVersion=${PR_VERSION}
   git add $POMPATH/pom.xml
   REPO="https://$GITHUB_ACTOR:$TOKEN@github.com/$GITHUB_REPOSITORY.git"
   git commit -m "Bump pom.xml from $OLD_VERSION to $PR_VERSION"
