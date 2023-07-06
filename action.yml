@@ -48,7 +48,6 @@ runs:
         NAME: ${{ inputs.git-username }}
         POMPATH: ${{ inputs.pom-path }}
         PR: ${{ inputs.is-pr }}
-        BRANCH: ${{ inputs.branch-name }}
 
     - name: Set outputs
       id: get-outputs
