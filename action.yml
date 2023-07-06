@@ -26,6 +26,10 @@ inputs:
     description: 'If its a PR we want to tag the version with pr'
     required: true
     default: 'false'
+  branch-name:
+    description: 'Get branch name'
+    required: false
+    default: 'main'
 
 outputs:
   version:
@@ -44,6 +48,7 @@ runs:
         NAME: ${{ inputs.git-username }}
         POMPATH: ${{ inputs.pom-path }}
         PR: ${{ inputs.is-pr }}
+        BRANCH: ${{ inputs.branch-name }}
 
     - name: Set outputs
       id: get-outputs

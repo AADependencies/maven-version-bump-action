@@ -37,11 +37,11 @@ git config --global user.name $NAME
 OLD_VERSION=$($DIR/get-version.sh)
 
 BUMP_MODE="patch"
-if git log -1 | grep -q "#major"; then
+if git log -1 | grep -q "major"; then
   BUMP_MODE="major"
-elif git log -1 | grep -q "#minor"; then
+elif git log -1 | grep -q "minor"; then
   BUMP_MODE="minor"
-elif git log -1 | grep -q "#patch"; then
+elif git log -1 | grep -q "patch"; then
   BUMP_MODE="patch"
 fi
 
@@ -56,6 +56,7 @@ then
   REPO="https://$GITHUB_ACTOR:$TOKEN@github.com/$GITHUB_REPOSITORY.git"
   git commit -m "Bump pom.xml from $OLD_VERSION to $PR_VERSION"
   git tag $PR_VERSION
+  git push $REPO $BRANCH_NAME
   git push $REPO --follow-tags
   git push $REPO --tags
 else
