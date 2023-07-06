@@ -57,7 +57,7 @@ then
   git commit -m "Bump pom.xml from $OLD_VERSION to $PR_VERSION"
   git push $REPO
 else
-  echo $BUMP_MODE "version bump detected"
+  echo $BUMP_MODE "version bump detected on a push to main"
   bump $BUMP_MODE $OLD_VERSION
   echo "pom.xml at" $POMPATH "will be bumped from" $OLD_VERSION "to" $NEW_VERSION
   mvn -q versions:set -DnewVersion="${NEW_VERSION}"
